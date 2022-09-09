@@ -31,8 +31,7 @@ def reset_gui(w, b):
             w[f'-{row}{col}-'].update(BLANK, text_color='white')
 
 
-def change_board(w, b, p):
-    w['-player-'].update(p)
+def change_board(w, b):
     for row in range(len(b)):
         for col in range(len(b[row])):
             w[f'-{row}{col}-'].update(b[row][col])
@@ -236,8 +235,6 @@ board = [[BLANK, BLANK, BLANK],
          [BLANK, BLANK, BLANK]]
 
 layout = [[Gui.Text('Tic-Tac-Toe', expand_x=True, font=MAIN_FONT, key='-mainText-', justification='center')],
-          [Gui.Text('Turn:', font=PLAYER_FONT, expand_x=True),
-           Gui.Text(text=turn, key='-player-', font=PLAYER_FONT, expand_x=True, justification='right')],
           [Gui.Button('Reset', expand_x=True, key='-reset-')],
           [Gui.Text('', auto_size_text=True, size=(CELL_WIDTH, CELL_HEIGHT), key='-00-', relief=Gui.RELIEF_SOLID,
                     border_width=2, justification='center', font='Stencil 60', enable_events=True),
@@ -266,7 +263,6 @@ while True:
         break
 
     if event in ['-reset-']:
-        window['-player-'].update(turn)
         board = reset_board(board)
         reset_gui(window, board)
         game_over = False
@@ -274,59 +270,58 @@ while True:
     if event in ['-00-']:
         if board[0][0] == BLANK and not game_over:
             board[0][0] = turn
-            change_board(window, board, turn)
+            change_board(window, board)
 
     if event in ['-01-']:
         if board[0][1] == BLANK and not game_over:
             board[0][1] = turn
-            change_board(window, board, turn)
+            change_board(window, board)
 
     if event in ['-02-']:
         if board[0][2] == BLANK and not game_over:
             board[0][2] = turn
-            change_board(window, board, turn)
+            change_board(window, board)
 
     if event in ['-10-']:
         if board[1][0] == BLANK and not game_over:
             board[1][0] = turn
-            change_board(window, board, turn)
+            change_board(window, board)
 
     if event in ['-11-']:
         if board[1][1] == BLANK and not game_over:
             board[1][1] = turn
-            change_board(window, board, turn)
+            change_board(window, board)
 
     if event in ['-12-']:
         if board[1][2] == BLANK and not game_over:
             board[1][2] = turn
-            change_board(window, board, turn)
+            change_board(window, board)
 
     if event in ['-20-']:
         if board[2][0] == BLANK and not game_over:
             board[2][0] = turn
-            change_board(window, board, turn)
+            change_board(window, board)
 
     if event in ['-21-']:
         if board[2][1] == BLANK and not game_over:
             board[2][1] = turn
-            change_board(window, board, turn)
+            change_board(window, board)
 
     if event in ['-22-']:
         if board[2][2] == BLANK and not game_over:
             board[2][2] = turn
-            change_board(window, board, turn)
+            change_board(window, board)
     """
         opponent turn
     """
     if isMovesLeft(board):
         best_move = findBestMove(board)
         board[best_move[0]][best_move[1]] = OPPONENT
-        change_board(window, board, turn)
+        change_board(window, board)
     """
         check if game over
     """
     if if_game_over():
         game_over = True
-        window['-player-'].update(f'GAME OVER, {change_player(turn)} wins')
 
 window.close()
